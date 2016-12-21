@@ -47,11 +47,13 @@ function Node() {
 // DO we need spouse here? is this additional data to enhance the structure with
 var treeInput = [
     {id: 1, name: 'Dad', dob: -600652800000, male: true, spouse: [2]},
+    {id: 7, name: 'Son-in-law', dob:516326400000, male: true, spouse:[4]},
     {id: 2, name: 'Mum', dob: -561686400000, male: false, spouse: [1]},
     {id: 3, name: 'Son', dob: 468115200000, male: true, father: 1, mother: 2, spouse: [4]},
     {id: 4, name: 'Daughter', dob: 271900800000, male: false, father: 1, mother: 2},
     {id: 5, name: 'Daughter-in-law', dob: 516326400000, male: false, spouse: [3]},
     {id: 6, name: 'Grandaughter', dob: 1281744000000, male: false, father: 3, mother: 5}
+
 ];
 
 /**
@@ -127,6 +129,13 @@ function addNode(node, toAdd) {
     } else if (_.contains(node.ids, toAdd.id) /*|| _.contains(node.parents, toAdd.id)*/) {
         // nothing to do, this can be dropped
         created = true;
+    } else if (_.intersection(node.ids, toAdd.spouse).length > 0) {
+        // spouse match
+
+        debug && console.log('Found spouse for %j (%j)', node.ids, toAdd);
+
+        node.ids.push(toAdd.id);
+        created = true;
     } else {
         // search children to see if toAdd's parent matches
 
@@ -200,7 +209,7 @@ while (orphaned.length > 0) {
 
     if (!created) {
         // add to back and try again later
-        o.attempts ? o.attempts++ : o.attempts = 0;
+        ('number' === typeof o.attempts) ? o.attempts++ : o.attempts = 0;
 
         // ... if not exceeded max attempts
         if (o.attempts <= maxAttempts) {
