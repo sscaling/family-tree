@@ -1,3 +1,6 @@
+// FIXME: CSS family tree only suitable for simple trees with a single hierarchy
+//        does not deal with two trees joining
+
 // from dataToTree.js
 var input = {
     "ids": [1, 2],
@@ -14,6 +17,8 @@ var input = {
 //    "depth": 1,
 //    "children": [{"ids": [5], "depth": 2, "children": []}, {"ids": [6], "depth": 3, "children": []}]
 //};
+
+//input = {"ids":[1,2,8,null],"depth":1,"children":[{"ids":[3,5],"depth":2,"children":[{"ids":[6],"depth":3,"children":[]}]},{"ids":[4],"depth":2,"children":[]},{"ids":[9],"depth":2,"children":[]},{"ids":[7],"depth":2,"children":[]}]};x
 
 class App extends React.Component {
 

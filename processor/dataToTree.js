@@ -49,10 +49,16 @@ var treeInput = [
     {id: 1, name: 'Dad', dob: -600652800000, male: true, spouse: [2]},
     {id: 7, name: 'Son-in-law', dob:516326400000, male: true, spouse:[4]},
     {id: 2, name: 'Mum', dob: -561686400000, male: false, spouse: [1]},
+    //{id: 8, name: 'Ex-wife', dob: -561686400000, male: false, spouse: [1]},
     {id: 3, name: 'Son', dob: 468115200000, male: true, father: 1, mother: 2, spouse: [4]},
     {id: 4, name: 'Daughter', dob: 271900800000, male: false, father: 1, mother: 2},
     {id: 5, name: 'Daughter-in-law', dob: 516326400000, male: false, spouse: [3]},
-    {id: 6, name: 'Grandaughter', dob: 1281744000000, male: false, father: 3, mother: 5}
+    {id: 6, name: 'Grandaughter', dob: 1281744000000, male: false, father: 3, mother: 5},
+    //{id: 9, name: 'Step-son', dob: 468115200000, male: true, mother: 8}
+
+
+    {id: 10, name: 'Son2', dob: 468115200000, male: true, father: 1, mother: 11},
+    {id: 11, name: 'Mum2', dob: 468115200000, male: false}
 
 ];
 
@@ -130,9 +136,12 @@ function addNode(node, toAdd) {
         // nothing to do, this can be dropped
         created = true;
     } else if (_.intersection(node.ids, toAdd.spouse).length > 0) {
+        // FIXME: multiple spouse's is broken
+        //        model needs to be updated
+
         // spouse match
 
-        debug && console.log('Found spouse for %j (%j)', node.ids, toAdd);
+        debug && console.log('Found spouse in %j for %j', node.ids, toAdd);
 
         node.ids.push(toAdd.id);
         created = true;
